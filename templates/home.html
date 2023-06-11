@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Summarizer using BART</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: #f5f5f5;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-right label {
+      margin-left: 10px;
+    }
+    
+    .content {
+      padding: 10px;
+    }
+    
+
+    .model-info {
+      margin-bottom: 20px;
+    }
+    
+    .model-info h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .model-description {
+      margin-bottom: 20px;
+    }
+    
+    .model-description p {
+      margin: 0;
+    }
+    
+    .model-link {
+      color: #0366d6;
+    }
+    
+    .table-container {
+      margin-top: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f5f5f5;
+    }
+    
+    .summary-input,
+    .text-input {
+      width: 100%;
+      padding: 1px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      resize: vertical;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .generate-summary-button {
+      justify-content: space-between;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Text Summarizer using BART</h1>
+
+    <form method="POST" action="{{ url_for('upload') }}">
+      <div class="header-right">
+        <label for="file-upload">Upload File :</label>
+        <input type="file" id="file-upload" name="file-upload" />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+    <form method="POST" action="{{ url_for('search_url') }}">
+      <div class="search-container">
+        <input type="text" id="web-address-search" name="web-address-search" placeholder="web address to summarize" />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="content">
+    <div class="model-info">
+    </div>
+    
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Text</th>
+            <th>Text summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <textarea class="summary-input" rows="25">{% if results %}{{results}}{% endif %}</textarea>
+            </td>
+            <td>
+              <textarea class="text-input" rows="25"></textarea>
+            </td>
+          </tr>
+
+          
+          
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+    <div class="header">
+      <label for="num-chars">Select number of characters :</label>
+      <input type="number" id="num-chars" min="1" placeholder="250"/>
+
+      <button class="generate-summary-button">Generate Summary</button>
+
+      <div class="search-container">
+        <input type="text" id="web-address-search" placeholder="web address to summarize" />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
