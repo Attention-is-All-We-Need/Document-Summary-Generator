@@ -1,0 +1,9 @@
+numpy
+pandas
+Flask
+python-dotenv
+docx
+pypdf2
+sentencepiece
+transformers
+# -e .
