@@ -17,4 +17,18 @@ This repository contains our approach towards the problem statement **Generative
 5. Activate the virtual environment. On Windows , <code>venv\Scripts\activate.bat</code>. On Linux/macOS , <code>source venv/bin/activate</code>.
 5. Install the required modules : <code> pip install -r requirements.txt</code>
 6. Run the **app.py** file and search http://127.0.0.1:8000 on the browser.
-### Happy Coding!!!
+
+### Project Structure
+1. **UPLOAD_FOLDER** : All the files (pdf, word or text) that will be uploaded will get stored here. It contains two files as samples.
+2. **src** : It contains the **exception.py** file for handling Custom Exceptions and the **logger.py** file which creates log files that helps us track our progress while the project is running and also stores the exceptions occured. The **utils.py** file contains two classes : the first to handle summarizing using LED Model and the second to generate tokens and embedding vectors of text using Huggingface BERT model.
+3. **src.components**: The src folder has a subfolder names components, which stores two files : **data_transformation.py** which can separate out the text from pdf, text or word files as paragraphs and the **web_scraping.py** file which can extract the headers and paragraphs from websites.
+4. **Templates:** The templates folder contains the **HTML code** for our frontend page.
+5. The **app.py** is a Flask app that provides endpoints to the webapp to perform the different tasks : uploading of documents, taking url , keywords , number of characters as inputs, display summaries and extracted texts, etc.
+6. The **requirements.txt** file contains all the Python modules required in the project.
+
+The team members are :
+1. Anwesh Saha (https://github.com/Anweshbyte)
+2. Arindom Bora (https://github.com/AriBora)
+3. Ajay Sankar Makkena (https://github.com/mas622424)
+4. Khush Khandelwal (https://github.com/khandelwalkhush05)
+5. Vineet Kumar (https://github.com/Vineet-the-git)
