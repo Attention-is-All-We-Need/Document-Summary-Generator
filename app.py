@@ -2,7 +2,7 @@ from flask import Flask,request,render_template
 import os
 from src.components.data_transformation import gen_para_file
 from werkzeug.utils import secure_filename
-from src.utils import BART,Embeddings
+from src.utils2 import BART,Embeddings
 from src.exception import CustomException
 from src.logger import logging
 import numpy as np
@@ -22,12 +22,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('home.html',files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/upload',methods=['GET','POST'])
 def upload():
     if request.method == 'GET':
-        return render_template('home.html')
+        return render_template('home.html',files=os.listdir(UPLOAD_FOLDER))
     else:
         file =request.files['file-upload']
         if file and allowed_file(file.filename):
@@ -35,22 +35,30 @@ def upload():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             paragraphs = gen_para_file(filename)
             text = ''.join(paragraphs)
-            return render_template('home.html',results=text)
-        return render_template('home.html')
+            return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
+        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/search_url',methods=['GET','POST'])
 def search_url():
     if request.method == 'GET':
-        return render_template('home.html')
+        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
         text=request.form.get('web-address-search')
-        return render_template('home.html',results=text)
+        return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
 
+@app.route('/showtext',methods=['GET','POST'])
+def showtext():
+    if request.method == 'GET':
+        return render_template('home.html',files=os.listdir(UPLOAD_FOLDER))
+    else:
+        uploaded_files =request.form.getlist('files')
+        print(uploaded_files)
+        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/summary',methods=['GET','POST'])
 def summary():
     if request.method == 'GET':
-        return render_template('home.html')
+        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
         text=request.form.get('inputtext')
         num_chars = int(request.form.get("num-chars"))
@@ -84,12 +92,12 @@ def summary():
             answer=''
             for i in labels[0]:
                 answer+= ''.join(text_lines[i])
-            return render_template('home.html',results=text,results2=answer)
+            return render_template('home.html',results=text,results2=answer, files=os.listdir(UPLOAD_FOLDER))
         else :
             bart = BART()
-            
+
             summary =bart.summarize(text, max_length=num_chars)
-            return render_template('home.html',results=text,results2=summary)
+            return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
 
 
 if __name__=="__main__":

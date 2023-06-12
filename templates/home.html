@@ -83,14 +83,37 @@
     }
     .generate-summary-button {
       justify-content: space-between;
+    }
 
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 150px;
+        z-index: 2;
+    }
+
+    .dropdown-content option {
+        display: block;
+        padding: 8px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>Text Summarizer using BART</h1>
-
+    <div>
     <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
       <div class="header-right">
         <label for="file-upload">Upload File :</label>
@@ -98,6 +121,19 @@
         <button class="btn" type="submit">Submit</button>
       </div>
     </form>
+    <form method="POST" action="{{ url_for('showtext') }}" enctype="multipart/form-data">  
+      <label files="files">Choose files:</label>
+      <button id="showOptionsBtn" onclick=toggleOptions() type="button">Select Files</button>
+      <select name="files" class="hidden" id="files" name="files" multiple>
+        {% if files %}
+          {% for file in files %}
+            <option value="{{file}}">{{file}}</option>
+          {% endfor %}
+        {% endif %}
+      </select>
+      <button class="btn" type="submit">Submit</button>
+    </form>
+    </div>
     <form method="POST" action="{{ url_for('search_url') }}">
       <div class="search-container">
         <input type="text" id="web-address-search" name="web-address-search" placeholder="web address to summarize" />
@@ -155,6 +191,10 @@
       input_area.textContent='';
       output_area.textContent='';
     })
+    const selectElement = document.getElementById("files");
+    const toggleOptions=() =>{
+      selectElement.classList.toggle("hidden");
+    }
   </script>
 </body>
 </html>
