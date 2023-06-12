@@ -31,3 +31,4 @@ The team members are :
 2. Arindom Bora (https://github.com/AriBora)
 3. Ajay Sankar Makkena (https://github.com/mas622424)
 4. Khush Khandelwal (https://github.com/khandelwalkhush05)
+5. Vineet Kumar (https://github.com/Vineet-the-git)
