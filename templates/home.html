@@ -110,42 +110,52 @@
     <div class="model-info">
     </div>
     
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Text</th>
-            <th>Text summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <textarea class="summary-input" rows="25">{% if results %}{{results}}{% endif %}</textarea>
-            </td>
-            <td>
-              <textarea class="text-input" rows="25"></textarea>
-            </td>
-          </tr>
-
-          
-          
-          <!-- Add more rows as needed -->
-        </tbody>
-      </table>
-    </div>
-    <div class="header">
-      <label for="num-chars">Select number of characters :</label>
-      <input type="number" id="num-chars" min="1" placeholder="250"/>
-
-      <button class="generate-summary-button">Generate Summary</button>
-
-      <div class="search-container">
-        <input type="text" id="web-address-search" placeholder="web address to summarize" />
-        <button class="btn" type="submit">Submit</button>
+    <form method="POST" action="{{ url_for('summary') }}">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Text</th>
+              <th>Text summary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <textarea class="summary-input" rows="25" id="inputtext" name="inputtext">{% if results %}{{results}}{% endif %}</textarea>
+              </td>
+              <td>
+                <textarea class="text-input" rows="25" id="outputtext" name="outputtext">{% if results2 %}{{results2}}{% endif %}</textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+
+    <div class="header">
+      <div>
+      <label for="num-chars">Select number of characters :</label>
+      <input type="number" id="num-chars" name="num-chars" min="1" placeholder="250"/>
+      </div>
+      <button class="generate-summary-button">Generate Summary</button>
+    
+      <button class="reset-button" id="reset-button" type="reset">Reset</button>
+      
+      <input type="text" id="keywordsearch" name="keywordsearch" placeholder="keyword to summarize" />
+      
+    </form>
     </div>
   </div>
+
+  <script>
+    const button = document.getElementById('reset-button');
+    button.addEventListener('click', e=>{
+      const input_area = document.getElementById('inputtext');
+      const output_area = document.getElementById('outputtext');
+      input_area.textContent='';
+      output_area.textContent='';
+    })
+  </script>
 </body>
 </html>
 

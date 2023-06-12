@@ -6,7 +6,6 @@ sys.path.append(folder_path)
 from src.exception import CustomException
 from src.logger import logging
 
-import pandas as pd
 import PyPDF2
 import docx
 

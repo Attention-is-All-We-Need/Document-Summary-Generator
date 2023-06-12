@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 import torch
 
-from logger import logging
-from exception import CustomException
+from src.logger import logging
+from src.exception import CustomException
 
 
 class BART:
@@ -23,10 +23,11 @@ class BART:
         words = text.split(' ')
         words =set(words)
         max_len = min(len(words),1024)
+        logging.info('Total words :{}'.format(max_len))
         inputs = self.tokenizer.batch_encode_plus([text], max_length=max_len, return_tensors='pt', truncation=True)
         input_ids = inputs['input_ids']
         attention_mask = inputs['attention_mask']
-
+        logging.info("Words encoded. Now generating summary...")
         summary_ids = self.model.generate(input_ids, attention_mask=attention_mask, min_length=max_length//2, max_length=max_length)
         summary = self.tokenizer.decode(summary_ids.squeeze(), skip_special_tokens=True)
 
@@ -36,9 +37,9 @@ class Embeddings:
     def __init__(self):
         logging.info("Initialising BERT transformer.")
         try :
-            from transformers import AlbertTokenizer,AlbertModel
-            self.model = AlbertModel.from_pretrained("albert-base-v2")
-            self.tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')
+            from transformers import BertTokenizer,BertModel
+            self.model = BertModel.from_pretrained("bert-base-uncased")
+            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         except Exception as e:
             raise CustomException(e,sys)
         
