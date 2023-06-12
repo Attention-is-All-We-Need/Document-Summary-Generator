@@ -10,6 +10,7 @@ import PyPDF2
 import docx
 
 folder = os.path.join(folder_path,'UPLOAD_FOLDER')
+
 def gen_para_file(file_name):
     file_name = os.path.join(folder,file_name)
     file_extension = os.path.splitext(file_name)[1]

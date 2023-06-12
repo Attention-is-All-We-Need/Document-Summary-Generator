@@ -2,7 +2,7 @@ from flask import Flask,request,render_template
 import os
 from src.components.data_transformation import gen_para_file
 from werkzeug.utils import secure_filename
-from src.utils import BART,Embeddings
+from src.utils import LED,Embeddings
 from src.exception import CustomException
 from src.logger import logging
 from src.components.web_scraping import get_website
@@ -101,12 +101,12 @@ def summary():
             answer=''
             for i in labels[0]:
                 answer+= ''.join(text_lines[i])
-            bart = BART()
-            summary =bart.summarize(answer, max_length=num_chars)
+            led = LED()
+            summary =led.summarize(answer, max_length=num_chars)
             return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
         else :
-            bart = BART()
-            summary =bart.summarize(text, max_length=num_chars)
+            led = LED()
+            summary =led.summarize(text, max_length=num_chars)
             return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
 
 
