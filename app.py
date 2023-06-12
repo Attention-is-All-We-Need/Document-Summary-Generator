@@ -2,9 +2,10 @@ from flask import Flask,request,render_template
 import os
 from src.components.data_transformation import gen_para_file
 from werkzeug.utils import secure_filename
-from src.utils2 import BART,Embeddings
+from src.utils import BART,Embeddings
 from src.exception import CustomException
 from src.logger import logging
+from src.components.web_scraping import get_website
 import numpy as np
 import hnswlib
 
@@ -43,7 +44,8 @@ def search_url():
     if request.method == 'GET':
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
-        text=request.form.get('web-address-search')
+        url=request.form.get('web-address-search')
+        text = get_website(url)
         return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/showtext',methods=['GET','POST'])
@@ -52,16 +54,23 @@ def showtext():
         return render_template('home.html',files=os.listdir(UPLOAD_FOLDER))
     else:
         uploaded_files =request.form.getlist('files')
-        print(uploaded_files)
-        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
+        text=[]
+        for file in uploaded_files:
+            file_text=gen_para_file(file)
+            text.append(' '.join(file_text))
+        text = ' '.join(text)
+        return render_template('home.html', files=os.listdir(UPLOAD_FOLDER), results=text)
 
 @app.route('/summary',methods=['GET','POST'])
 def summary():
     if request.method == 'GET':
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
+        bart = BART()
         text=request.form.get('inputtext')
-        num_chars = int(request.form.get("num-chars"))
+        num_chars=1000
+        if (num_chars):
+            num_chars = int(request.form.get("num-chars"))
         key_word = request.form.get("keywordsearch")
 
         logging.info('Input received.')
@@ -92,10 +101,10 @@ def summary():
             answer=''
             for i in labels[0]:
                 answer+= ''.join(text_lines[i])
+
+            summary =bart.summarize(answer, max_length=num_chars)
             return render_template('home.html',results=text,results2=answer, files=os.listdir(UPLOAD_FOLDER))
         else :
-            bart = BART()
-
             summary =bart.summarize(text, max_length=num_chars)
             return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
 

@@ -37,9 +37,13 @@ class Embeddings:
     def __init__(self):
         logging.info("Initialising BERT transformer.")
         try :
-            from transformers import BertTokenizer,BertModel
-            self.model = BertModel.from_pretrained("bert-base-uncased")
-            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            # from transformers import BertTokenizer,BertModel
+            # self.model = BertModel.from_pretrained("bert-base-uncased")
+            # self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+
+            from transformers import AlbertTokenizer,AlbertModel
+            self.model = AlbertModel.from_pretrained("albert-base-v2")
+            self.tokenizer = AlbertTokenizer.from_pretrained('albert-base-v2')
         except Exception as e:
             raise CustomException(e,sys)
         
