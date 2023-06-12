@@ -91,7 +91,7 @@
   <div class="header">
     <h1>Text Summarizer using BART</h1>
 
-    <form method="POST" action="{{ url_for('upload') }}">
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
       <div class="header-right">
         <label for="file-upload">Upload File :</label>
         <input type="file" id="file-upload" name="file-upload" />

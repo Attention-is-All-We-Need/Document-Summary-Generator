@@ -10,8 +10,9 @@ import pandas as pd
 import PyPDF2
 import docx
 
-
+folder = os.path.join(folder_path,'UPLOAD_FOLDER')
 def gen_para_file(file_name):
+    file_name = os.path.join(folder,file_name)
     file_extension = os.path.splitext(file_name)[1]
     if (file_extension=='.pdf'):
         return gen_para_pdf(file_name)
@@ -34,7 +35,7 @@ def gen_para_pdf(file_name):
                     paragraphs.append(para)
             return paragraphs
     except Exception as e:
-        logging.info("PDF File {0} not found.".format(file_name))
+        logging.info("PDF File not found.")
         paragraph=[]
         return paragraph
 
@@ -49,7 +50,7 @@ def gen_para_doc(file_name):
                     text.append(p_text)
         return text
     except Exception as e:
-        logging.info("Doc File {0} not found.".format(file_name))
+        logging.info("Doc File not found.")
         paragraph=[]
         return paragraph
     
@@ -65,7 +66,7 @@ def gen_para_txt(file_name):
                     paragraphs.append(para)
         return paragraphs
     except Exception as e:
-        logging.info("File {0} not found.".format(file_name))
+        logging.info("File not found.")
         paragraph=[]
         return paragraph
 
