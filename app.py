@@ -66,7 +66,7 @@ def summary():
     if request.method == 'GET':
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
-        bart = BART()
+        
         text=request.form.get('inputtext')
         num_chars=1000
         if (num_chars):
@@ -101,10 +101,11 @@ def summary():
             answer=''
             for i in labels[0]:
                 answer+= ''.join(text_lines[i])
-
+            bart = BART()
             summary =bart.summarize(answer, max_length=num_chars)
-            return render_template('home.html',results=text,results2=answer, files=os.listdir(UPLOAD_FOLDER))
+            return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
         else :
+            bart = BART()
             summary =bart.summarize(text, max_length=num_chars)
             return render_template('home.html',results=text,results2=summary, files=os.listdir(UPLOAD_FOLDER))
 
