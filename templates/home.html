@@ -168,24 +168,26 @@
         </table>
       </div>
 
-    <div class="header">
-      <div>
-      <label for="num-chars">Select number of characters :</label>
-      <input type="number" id="num-chars" name="num-chars" min="1" placeholder="250"/>
+      <div class="header">
+        <div>
+        <label for="num-chars">Select number of characters :</label>
+        <input type="number" id="num-chars" name="num-chars" min="1" value="250" required="true"/>
+        </div>
+        <button class="generate-summary-button">Generate Summary</button>
+      
+        <button class="reset-button" id="reset-button" type="reset">Reset</button>
+        
+        <input type="text" id="keywordsearch" name="keywordsearch" placeholder="keyword to summarize" />
+        
+        <button type="button" id="downloadbutton">Download as TEXT File</button>
       </div>
-      <button class="generate-summary-button">Generate Summary</button>
-    
-      <button class="reset-button" id="reset-button" type="reset">Reset</button>
-      
-      <input type="text" id="keywordsearch" name="keywordsearch" placeholder="keyword to summarize" />
-      
     </form>
-    </div>
   </div>
 
   <script>
+
     const button = document.getElementById('reset-button');
-    button.addEventListener('click', e=>{
+    button.addEventListener("click", e=>{
       const input_area = document.getElementById('inputtext');
       const output_area = document.getElementById('outputtext');
       input_area.textContent='';
@@ -195,7 +197,20 @@
     const toggleOptions=() =>{
       selectElement.classList.toggle("hidden");
     }
+
+
+    const dwnldbutton = document.getElementById('downloadbutton');
+    dwnldbutton.addEventListener("click", e=>{
+      const text = document.getElementById('outputtext').textContent;
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(text));
+      element.setAttribute('Download', 'summary.txt');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    })
+
   </script>
 </body>
 </html>
-
