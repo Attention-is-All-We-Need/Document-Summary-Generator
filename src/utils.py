@@ -32,7 +32,7 @@ class LED:
             early_stopping=True,
         )
 
-        return result[0]
+        return result[0]['summary_text']
 
 class Embeddings:
     def __init__(self):
