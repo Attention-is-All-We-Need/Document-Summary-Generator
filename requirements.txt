@@ -10,5 +10,6 @@ hnswlib
 requests
 bs4
 docx
+youtube_transcript_api
 torch -cpu
 # -e .
