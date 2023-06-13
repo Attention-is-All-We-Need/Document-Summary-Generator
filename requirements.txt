@@ -6,4 +6,8 @@ docx
 pypdf2
 sentencepiece
 transformers
+hnswlib
+requests
+bs4
+torch -cpu
 # -e .

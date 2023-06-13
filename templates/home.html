@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text Summarizer using LED</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background-color: #f5f5f5;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-right label {
+      margin-left: 10px;
+    }
+    
+    .content {
+      padding: 10px;
+    }
+    
+
+    .model-info {
+      margin-bottom: 20px;
+    }
+    
+    .model-info h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .model-description {
+      margin-bottom: 20px;
+    }
+    
+    .model-description p {
+      margin: 0;
+    }
+    
+    .model-link {
+      color: #0366d6;
+    }
+    
+    .table-container {
+      margin-top: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f5f5f5;
+    }
+    
+    .summary-input,
+    .text-input {
+      width: 100%;
+      padding: 1px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      resize: vertical;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .generate-summary-button {
+      justify-content: space-between;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        min-width: 150px;
+        z-index: 2;
+    }
+
+    .dropdown-content option {
+        display: block;
+        padding: 8px;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Text Summarizer using BART</h1>
+    <div>
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+      <div class="header-right">
+        <label for="file-upload">Upload File :</label>
+        <input type="file" id="file-upload" name="file-upload" />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+    <form method="POST" action="{{ url_for('showtext') }}" enctype="multipart/form-data">  
+      <label files="files">Choose files:</label>
+      <button id="showOptionsBtn" onclick=toggleOptions() type="button">Select Files</button>
+      <select name="files" class="hidden" id="files" name="files" multiple>
+        {% if files %}
+          {% for file in files %}
+            <option value="{{file}}">{{file}}</option>
+          {% endfor %}
+        {% endif %}
+      </select>
+      <button class="btn" type="submit">Submit</button>
+    </form>
+    </div>
+    <form method="POST" action="{{ url_for('search_url') }}">
+      <div class="search-container">
+        <input type="text" id="web-address-search" name="web-address-search" placeholder="web address to summarize" />
+        <button class="btn" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="content">
+    <div class="model-info">
+    </div>
+    
+    <form method="POST" action="{{ url_for('summary') }}">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Text</th>
+              <th>Text summary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <textarea class="summary-input" rows="25" id="inputtext" name="inputtext">{% if results %}{{results}}{% endif %}</textarea>
+              </td>
+              <td>
+                <textarea class="text-input" rows="25" id="outputtext" name="outputtext">{% if results2 %}{{results2}}{% endif %}</textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="header">
+        <div>
+        <label for="num-chars">Select number of characters :</label>
+        <input type="number" id="num-chars" name="num-chars" min="1" value="250" required="true"/>
+        </div>
+        <button class="generate-summary-button">Generate Summary</button>
+      
+        <button class="reset-button" id="reset-button" type="reset">Reset</button>
+        
+        <input type="text" id="keywordsearch" name="keywordsearch" placeholder="keyword to summarize" />
+        
+        <button type="button" id="downloadbutton">Download as TEXT File</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+
+    const button = document.getElementById('reset-button');
+    button.addEventListener("click", e=>{
+      const input_area = document.getElementById('inputtext');
+      const output_area = document.getElementById('outputtext');
+      input_area.textContent='';
+      output_area.textContent='';
+    })
+    const selectElement = document.getElementById("files");
+    const toggleOptions=() =>{
+      selectElement.classList.toggle("hidden");
+    }
+
+
+    const dwnldbutton = document.getElementById('downloadbutton');
+    dwnldbutton.addEventListener("click", e=>{
+      const text = document.getElementById('outputtext').textContent;
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=UTF-8,' + encodeURIComponent(text));
+      element.setAttribute('Download', 'summary.txt');
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    })
+
+  </script>
+</body>
+</html>
