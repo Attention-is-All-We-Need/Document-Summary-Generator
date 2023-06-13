@@ -34,17 +34,12 @@ def upload():
     if request.method == 'GET':
         return render_template('home.html',files=os.listdir(UPLOAD_FOLDER))
     else:
-        files =request.files['file-upload']
-        print(files)
-        for file in files:
-            print(file)
-            
-            text=''
-            # if file and allowed_file(file.filename):
-            #     filename = secure_filename(file.filename)
-            #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #     paragraphs = gen_para_file(filename)
-            #     text = ''.join(paragraphs)
+        file =request.files['file-upload']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            paragraphs = gen_para_file(filename)
+            text = ''.join(paragraphs)
             return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     
