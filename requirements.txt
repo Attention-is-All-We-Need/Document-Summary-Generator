@@ -9,5 +9,6 @@ transformers
 hnswlib
 requests
 bs4
+docx
 torch -cpu
 # -e .
