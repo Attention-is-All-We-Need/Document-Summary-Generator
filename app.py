@@ -6,8 +6,12 @@ from src.utils import LED,Embeddings
 from src.exception import CustomException
 from src.logger import logging
 from src.components.web_scraping import get_website
+from src.components.web_scraping import get_yt
 import numpy as np
 import hnswlib
+import re
+from urllib.parse import urlparse, parse_qs
+from contextlib import suppress
 
 def allowed_file(file_name):
     file_extension = os.path.splitext(file_name)[1]
@@ -38,15 +42,29 @@ def upload():
             text = ''.join(paragraphs)
             return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
+    
+# @app.route('/search_url',methods=['GET','POST'])
+# def search_url():
+#     if request.method == 'GET':
+#         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
+#     else:
+#         url=request.form.get('web-address-search')
+#         text = get_website(url)
+#         return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/search_url',methods=['GET','POST'])
 def search_url():
     if request.method == 'GET':
         return render_template('home.html', files=os.listdir(UPLOAD_FOLDER))
     else:
-        url=request.form.get('web-address-search')
-        text = get_website(url)
-        return render_template('home.html',results=text, files=os.listdir(UPLOAD_FOLDER))
+        url = request.form.get('web-address-search')
+
+        if re.match(r'^https?://(?:www\.)?youtube\.com/', url):
+            text = get_yt(url)
+        else:
+            text = get_website(url)
+        
+        return render_template('home.html', results=text, files=os.listdir(UPLOAD_FOLDER))
 
 @app.route('/showtext',methods=['GET','POST'])
 def showtext():
