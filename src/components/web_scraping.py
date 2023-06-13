@@ -2,9 +2,11 @@ import os
 import sys
 folder_path = os.getcwd()
 sys.path.append(folder_path)
-
+from urllib.parse import urlparse, parse_qs
+from contextlib import suppress
 from src.exception import CustomException
 from src.logger import logging
+from youtube_transcript_api import YouTubeTranscriptApi
 
 import requests
 from bs4 import BeautifulSoup
