@@ -117,7 +117,7 @@
     <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
       <div class="header-right">
         <label for="file-upload">Upload File :</label>
-        <input type="file" id="file-upload" name="file-upload" />
+        <input type="file" id="file-upload" name="file-upload" multiple/>
         <button class="btn" type="submit">Submit</button>
       </div>
     </form>
