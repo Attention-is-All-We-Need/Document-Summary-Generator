@@ -28,8 +28,9 @@ This repository contains our approach towards the problem statement **Generative
 
 ### Snapshot of the project
 ![image](https://github.com/Attention-is-All-We-Need/Document-Summary-Generator/assets/95437455/abb2019c-deb4-4e21-b400-c8a81fb1301c)
-It can summarize Webpages, and PDF Files including research articles, for you
-The team members are :
+It can summarize Webpages, and PDF Files including research articles, for you!
+
+# The team members are :
 1. Anwesh Saha (https://github.com/Anweshbyte)
 2. Arindom Bora (https://github.com/AriBora)
 3. Ajay Sankar Makkena (https://github.com/mas622424)
