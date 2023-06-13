@@ -26,6 +26,9 @@ This repository contains our approach towards the problem statement **Generative
 5. The **app.py** is a Flask app that provides endpoints to the webapp to perform the different tasks : uploading of documents, taking url , keywords , number of characters as inputs, display summaries and extracted texts, etc.
 6. The **requirements.txt** file contains all the Python modules required in the project.
 
+###Snapshot of the project
+![image](https://github.com/Attention-is-All-We-Need/Document-Summary-Generator/assets/95437455/abb2019c-deb4-4e21-b400-c8a81fb1301c)
+It can summarize Webpages, and PDF Files including research articles, for you
 The team members are :
 1. Anwesh Saha (https://github.com/Anweshbyte)
 2. Arindom Bora (https://github.com/AriBora)
