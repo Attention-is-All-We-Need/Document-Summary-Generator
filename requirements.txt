@@ -2,6 +2,7 @@ numpy
 pandas
 Flask
 python-dotenv
+python-docx
 docx
 pypdf2
 sentencepiece
