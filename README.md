@@ -13,7 +13,7 @@ This repository contains our approach towards the problem statement **Generative
 2. Clone the repository. In your terminal, type:
   <pre><code>git clone https://github.com/your-username/Document-Summary-Generator.git</code></pre>
 3. Navigate to the repository directory : <code>cd Document-Summary-Generator</code>
-4. Setup Python Virtual Environment : <code> virtualenv venv </code>
+4. Setup a Python Virtual Environment : <code> virtualenv venv </code>
 5. Activate the virtual environment. On Windows , <code>venv\Scripts\activate.bat</code>. On Linux/macOS , <code>source venv/bin/activate</code>.
 5. Install the required modules : <code> pip install -r requirements.txt</code>
 6. Run the **app.py** file and search http://127.0.0.1:8000 on the browser.
